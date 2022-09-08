@@ -14,6 +14,9 @@ contract SimpleStorage {
       favoriteNumber = _favoriteNumber;
   }
   
+      mapping(string => uint256) public nameToFavoriteNumber;
+
+  
     //People public person = People({favoriteNumber: 2, name: "Jake"});
 
     struct People {
@@ -43,6 +46,8 @@ contract SimpleStorage {
 
   function addPerson(string memory _name, uint256 _favoriteNumber) public {
       people.push(People(_favoriteNumber, _name));
+      nameToFavoriteNumber[_name] = _favoriteNumber;
+
   }//putting a ; here got an error too. so unlike JavaScript
 
 
