@@ -1,13 +1,17 @@
 // SPDX-License-Identifier: MIT
-//
+//EVM = Ethereum Virtual Machine
+
+
 pragma solidity ^0.8.8;
-// pragma solidity ^0.8.0;
-// pragma solidity >=0.8.0 <0.9.0;
+
+
+    // pragma solidity ^0.8.0;
+    // pragma solidity >=0.8.0 <0.9.0;
 
 contract SimpleStorage {
     //boolean, uint (unsigned integer - a whole number and non negative), int (positive or negative whole number, address, bytes
 
-  //gets initialized to zero auto
+    //gets initialized to zero auto
   uint256 favoriteNumber;
 
   function store(uint256 _favoriteNumber) public {
@@ -17,7 +21,7 @@ contract SimpleStorage {
       mapping(string => uint256) public nameToFavoriteNumber;
 
   
-    //People public person = People({favoriteNumber: 2, name: "Jake"});
+      //People public person = People({favoriteNumber: 2, name: "Jake"});
 
     struct People {
         uint256 favoriteNumber;
@@ -43,6 +47,10 @@ contract SimpleStorage {
       return (1+1);
   }
 
+//calldata, memory, storage
+//calldata = temp variable we can't alter
+//memory = temp variable we can alter
+//storage = permanent variable that can be modified
 
   function addPerson(string memory _name, uint256 _favoriteNumber) public {
       people.push(People(_favoriteNumber, _name));
