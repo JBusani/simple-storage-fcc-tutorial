@@ -9,29 +9,36 @@ contract FundMe{
     //constructor(){priceFeed = AggregatorV3Interface(0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e)}
     uint public minimumUSD = 50;
     //sets minimum amount someone can fund
+
+
     function fund() public payable{
 
         require(msg.value >= minimumUSD, "Didn't send enough");
         //but let's convert it
     }
-    function getPrice() public{
+
+
+    function getPrice() public view returns(uint256){
         //abi - how? interface
         //Address 0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e
 
-//destructor by looking at github and on using data example on chainlink page too
-        AggregatorV3Interface priceFeed = AggregatorV3Interface(0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e)
-        (,int price,,) =  priceFeed.latestRoundData();
-        
-        //we can convert the int to uint easily like this. remember
-        //solidity doesn't do decimal places
-        //make sure the numbers become the same. 
+            //destructor by looking at github and on using data example on chainlink page too
+        AggregatorV3Interface priceFeed = AggregatorV3Interface(0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e);
+        (,int256 price,,,) =  priceFeed.latestRoundData();         
         return uint256(price * 1e10); // 1 ** 10 == 1000000000
-
-        //Goerli Testnet is now recommended
-        //Rinkeby Testnet is Deprecated!
+            
+            //these commas were important and needed to match in number and placement
+            //we can convert the int to uint easily like this. remember
+            //solidity doesn't do decimal places
+            //make sure the numbers become the same.
+            //Goerli Testnet is now recommended
+            //Rinkeby Testnet is Deprecated!
     }
+
+
+
     function getVersion() public view returns (uint256){
-        AggregatorV3Interface priceFeed = AggregatorV3Interface(0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e)
+        AggregatorV3Interface priceFeed = AggregatorV3Interface(0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e);
         return priceFeed.version();
     }
     function getConversionRate() public {}
