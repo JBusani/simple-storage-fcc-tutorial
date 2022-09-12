@@ -7,7 +7,7 @@ import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 contract FundMe{
     //constructor(){priceFeed = AggregatorV3Interface(0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e)}
-    uint public minimumUSD = 50;
+    uint public minimumUSD = 50 * 1e18;
     //sets minimum amount someone can fund
 
 
