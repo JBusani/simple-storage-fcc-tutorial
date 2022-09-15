@@ -10,13 +10,18 @@ contract FundMe{
     uint public minimumUSD = 50 * 1e18;
     //sets minimum amount someone can fund
 
+//let's keep track of the people who send us money
+    address[] public funders;
+    mapping(address => uint256) public addressToAmountFunded;
+
 
     function fund() public payable{
 
-        require(msg.value >= minimumUSD, "Didn't send enough");
+        require(getConversionRate(msg.value) >= minimumUSD, "Didn't send enough");
         //but let's convert it
         //msg.value is ethereum
-
+        funders.push(msg.sender);
+        addressToAmountFunded[msg.sender] = msg.value
     }
 
 
