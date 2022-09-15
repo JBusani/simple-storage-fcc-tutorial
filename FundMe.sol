@@ -4,6 +4,8 @@ pragma solidity ^0.8.0;
 //import directly from github
 import "./PriceConverter.sol";
 
+error NotOwner();
+
 contract FundMe{
     using PriceConverter for uint256;
     //constructor(){priceFeed = AggregatorV3Interface(0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e)}
@@ -26,6 +28,7 @@ contract FundMe{
         //msg.value is ethereum
         funders.push(msg.sender);
         addressToAmountFunded[msg.sender] = msg.value;
+
     }
 
 
@@ -60,11 +63,21 @@ contract FundMe{
             require(callSuccess, "Call failed");
     }
     modifier onlyOwner{
-        require(msg.sender == i_owner, "Sender is not owner!");
+        //require(msg.sender == i_owner, "Sender is not owner!");
+        if(msg.sender != i_owner){revert NotOwner();}
         _;
         /*underscore tells us when to run the rest of the code in the function
         so if it was first then the code in the withdraw function for example 
         would run first, and then the require runs. that's not what we want.
         similar to a spread operator*/
     }
+    //What happens if someone sends this contract ETH without calling the fund functions
+    receive() external payable{
+        fund();
+    }
+
+    fallback()external payable{
+        fund();
+    }
+
 }
