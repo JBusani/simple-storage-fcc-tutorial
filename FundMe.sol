@@ -6,7 +6,7 @@ import "./PriceConverter.sol";
 
 contract FundMe{
     using PriceConverter for uint256;
-    //constructor(){priceFeed = AggregatorV3Interface(0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e)}
+    //constructor(){priceFeed = AggregatorV3Interface("ADDRESS")}
     uint public minimumUSD = 50 * 1e18;
     //sets minimum amount someone can fund
 
