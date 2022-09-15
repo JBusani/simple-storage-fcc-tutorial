@@ -6,22 +6,22 @@ import "./PriceConverter.sol";
 
 contract FundMe{
     using PriceConverter for uint256;
-    //constructor(){priceFeed = AggregatorV3Interface("ADDRESS")}
-    uint public minimumUSD = 50 * 1e18;
+    //constructor(){priceFeed = AggregatorV3Interface(0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e)}
+    uint public constant MINIMUM_USD = 50 * 1e18;
     //sets minimum amount someone can fund
 
 //let's keep track of the people who send us money
     address[] public funders;
     mapping(address => uint256) public addressToAmountFunded;
 
-    address public owner;
+    address public immutable i_owner;
     constructor(){
-        owner = msg.sender;//person who deployed it.
+        i_owner = msg.sender;//person who deployed it.
     }
     function fund() public payable{
         //msg.value is considered the parameter for getConversionRate
         //additional parameters can get put in the paratheses though
-        require(msg.value.getConversionRate() >= minimumUSD, "Didn't send enough");
+        require(msg.value.getConversionRate() >= MINIMUM_USD, "Didn't send enough");
         //but let's convert it
         //msg.value is ethereum
         funders.push(msg.sender);
@@ -60,7 +60,7 @@ contract FundMe{
             require(callSuccess, "Call failed");
     }
     modifier onlyOwner{
-        require(msg.sender == owner, "Sender is not owner!");
+        require(msg.sender == i_owner, "Sender is not owner!");
         _;
         /*underscore tells us when to run the rest of the code in the function
         so if it was first then the code in the withdraw function for example 
