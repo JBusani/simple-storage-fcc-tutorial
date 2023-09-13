@@ -4,6 +4,12 @@ pragma solidity ^0.8.0;
 contract SimpleStorageHockeyGame {
     uint256 public homeScore;
     uint256 public awayScore;
+    TotalScore public score = TotalScore({homeScore: homeScore, awayScore: awayScore});
+
+    struct TotalScore {
+        uint256 homeScore;
+        uint256 awayScore;
+    }
 
     // Constructor to initialize scores
     constructor() {
