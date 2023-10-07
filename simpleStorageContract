@@ -5,7 +5,31 @@ contract SimpleStorageGolf {
     uint8 public constant totalHoles = 18;
     uint8[totalHoles] internal holeScores;
   
+    mapping(uint8 => uint8) public holeNumberToHoleNumber;
 
+    struct Hole{
+        uint8 holeNumber;
+        uint8 par;
+    }
+
+    //each of the 18 in the array will use the Hole type
+    Hole[totalHoles] public holes;
+
+
+    constructor() {
+        // Call the function to initialize a fake 18-hole course
+        initializeFakeCourse();
+    }
+
+    function initializeFakeCourse() internal {
+        for (uint8 i = 0; i < totalHoles; i++) {
+            // Assign hole numbers and set par values (you can modify as needed)
+            holes[i] = Hole({
+                holeNumber: i + 1,
+                par: uint8((i % 3) + 3)  // Assigning par values based on a simple pattern
+            });
+        }
+    }
 
   //add a score to the hole scores array
     function setHoleScore(uint8 holeNumber, uint8 score) public  {
@@ -16,6 +40,13 @@ contract SimpleStorageGolf {
     function getScore() public view returns (uint8[totalHoles] memory) {
         return holeScores;
     }
-
+ function getHolesInfo() public view returns (Hole[totalHoles] memory) {
+        return holes;
+    }
+    // Get information about a specific hole based on its hole number
+    function getHoleInfo(uint8 holeNumber) public view returns (Hole memory) {
+        require(holeNumber > 0 && holeNumber <= totalHoles, "Invalid hole number");
+        return holes[holeNumber - 1];
+    }
     
 }
