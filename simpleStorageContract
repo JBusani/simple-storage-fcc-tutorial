@@ -3,15 +3,19 @@ pragma solidity ^0.8.0;
 
 contract SimpleStorageGolf {
     uint8 public constant totalHoles = 18;
-    uint8[totalHoles] internal holeScores;
-  
+    uint8[totalHoles] public ScoreCard;
+
     mapping(uint8 => uint8) public holeNumberToHoleNumber;
+
+    //(holeNumber => score)
+    mapping(uint8 => uint8) public holeNumberToPlayerScorecard;
 
     struct Hole{
         uint8 holeNumber;
         uint8 par;
     }
 
+    
     //each of the 18 in the array will use the Hole type
     Hole[totalHoles] public holes;
 
@@ -31,15 +35,15 @@ contract SimpleStorageGolf {
         }
     }
 
-  //add a score to the hole scores array
-    function setHoleScore(uint8 holeNumber, uint8 score) public  {
-        require(holeNumber > 0 && holeNumber <= totalHoles, "Invalid hole number");
-        holeScores[holeNumber - 1] = score;
+    function addScore(uint8 _holeNumber, uint8 _strokes) public {
+        require(_strokes >= 1 && _strokes <= 12, "You have entered a number of strokes outside of the range possible");
+        require(_holeNumber >= 1 && _holeNumber <= 18, "Invalid hole number");
+        ScoreCard[_holeNumber - 1] = _strokes;
+    }
+    function getScoreCardInfo() public view returns (uint8[totalHoles] memory){
+        return ScoreCard;
     }
 
-    function getScore() public view returns (uint8[totalHoles] memory) {
-        return holeScores;
-    }
  function getHolesInfo() public view returns (Hole[totalHoles] memory) {
         return holes;
     }
