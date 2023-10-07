@@ -1,61 +1,17 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract SimpleStorageHockeyGame {
-    uint256 public homeScore;
-    uint256 public awayScore;
-    TotalScore public score;
-    PointStat[] public scoringSummary;
-    mapping(uint256 => Player) public homeTeam;
-    mapping(uint256 => Player) public awayTeam;
+contract SimpleStorageGolf {
+    uint256 public playerScore;
 
-    struct TotalScore {
-        uint256 homeScore;
-        uint256 awayScore;
+    function setScore(uint256 _score) public {
+        playerScore = _score;
+
     }
 
-    struct Player {
-        string firstName;
-        string lastName;
-        uint256 playerNumber;
+    function getScore() public view returns (uint256) {
+        return playerScore;
     }
 
-    struct PointStat {
-        uint timestamp;
-        Player goalPlayer;
-        Player assistPlayer;
-        Player secondaryAssistPlayer;
-    }
-
-    constructor() {
-        homeScore = 0;
-        awayScore = 0;
-        score = TotalScore(homeScore, awayScore);
-    }
-
-    function setScores(uint256 _homeScore, uint256 _awayScore) public {
-        homeScore = _homeScore;
-        awayScore = _awayScore;
-        score = TotalScore(homeScore, awayScore);
-    }
-
-    function viewScores() public view returns (uint256, uint256) {
-        return (homeScore, awayScore);
-    }
-
-    function addPointStat(
-        uint256 _timestamp,
-        Player memory _goalPlayer,
-        Player memory _assistPlayer,
-        Player memory _secondaryAssistPlayer
-    ) public {
-        PointStat memory newPoint = PointStat({
-            timestamp: _timestamp,
-            goalPlayer: _goalPlayer,
-            assistPlayer: _assistPlayer,
-            secondaryAssistPlayer: _secondaryAssistPlayer
-        });
-
-        scoringSummary.push(newPoint);
-    }
+    
 }
