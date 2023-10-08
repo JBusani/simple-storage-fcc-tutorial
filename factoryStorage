@@ -1,0 +1,38 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+import "./simpleStorageContract.sol";
+
+//it's like a manager for all the storage contracts deployed.
+
+contract StorageFactory {
+    //keep track of the contracts created
+    address[] public deployedGames;
+    
+
+    function createGame() public {
+        SimpleStorageGolf newGame = new SimpleStorageGolf();
+        //address(newGame) converts the newGame instance to its address. In Solidity, when you create a new contract instance, you can obtain its address using this conversion.
+        deployedGames.push(address(newGame));
+    }
+
+//interact with scorecard on specific contract
+    function factoryStore(uint256 _deployedGamesIndex, uint8 _holeNumber, uint8 _strokes ) public {
+        //Need address
+        //need abi
+        //need index for deployed games then hole number and score for that hole.
+        
+        require(_deployedGamesIndex < deployedGames.length, "Invalid index");
+        require(_holeNumber >= 1 && _holeNumber <= 18, "Invalid Hole Number");
+        require(_strokes >= 1 && _strokes <= 12, "Strokes outside minimum and maximum strokes possible");
+        
+        SimpleStorageGolf deployedGame = SimpleStorageGolf(deployedGames[_deployedGamesIndex]);
+        deployedGame.addScore(_holeNumber, _strokes);
+
+    }
+
+    function getScoreCard(uint256 _deployedGamesIndex) public view returns(uint8[18] memory){
+        SimpleStorageGolf deployedGame = SimpleStorageGolf(deployedGames[_deployedGamesIndex]);
+        return deployedGame.getScoreCardInfo();
+
+    }
+}
