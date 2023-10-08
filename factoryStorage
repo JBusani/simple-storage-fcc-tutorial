@@ -31,8 +31,7 @@ contract StorageFactory {
     }
 
     function getScoreCard(uint256 _deployedGamesIndex) public view returns(uint8[18] memory){
-        SimpleStorageGolf deployedGame = SimpleStorageGolf(deployedGames[_deployedGamesIndex]);
-        return deployedGame.getScoreCardInfo();
-
+        return SimpleStorageGolf(deployedGames[_deployedGamesIndex]).getScoreCardInfo();
     }
 }
+
