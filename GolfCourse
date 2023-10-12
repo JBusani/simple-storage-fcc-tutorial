@@ -1,0 +1,38 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "./SimpleStorage.sol";
+
+contract GolfCourse {
+    uint8 public totalHoles;    
+    //each of the 18 in the array will use the Hole type
+    Hole[totalHoles] public holes;
+    
+    struct Hole{
+        uint8 holeNumber;
+        uint8 par;
+    }   
+    
+
+function initializeFakeCourse() internal {
+        for (uint8 i = 0; i < totalHoles; i++) {
+            // Assign hole numbers and set par values (you can modify as needed)
+            holes[i] = Hole({
+                holeNumber: i + 1,
+                par: uint8((i % 3) + 3)  // Assigning par values based on a simple pattern
+            });
+        }
+    }
+
+    constructor(uint8 _totalHoles) {
+        require(_totalHoles == 18 || _totalHoles == 9, "Total holes must be 9 or 18");
+        totalHoles = _totalHoles;
+
+        // Call the function to initialize a fake 18-hole course
+        initializeFakeCourse();
+
+        
+    }
+
+     
+}
